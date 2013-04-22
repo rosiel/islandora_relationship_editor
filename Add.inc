@@ -1,12 +1,6 @@
 <?php
 
-// Configure this to be the namespace your relationships belong to,
-// or, as I understand it, a URI that won't overlap with anyone else's 
-// namespaces. 
-define('MYNS_URI', 'http://www.cec.org/ontologies/relationships#');
-
-
-function add_relationships(array $form, array &$form_state, $object_pid) {
+function islandora_relationship_editor_add_relationships(array $form, array &$form_state, $object_pid) {
   $form = array();
   $form['this'] = array(
     '#title' => t('This Object'),
@@ -46,7 +40,7 @@ function add_relationships(array $form, array &$form_state, $object_pid) {
 
 }
 
-function add_relationships_submit($form, &$form_state) {
+function islandora_relationship_editor_add_relationships_submit($form, &$form_state) {
   $object = islandora_object_load($form_state['values']['this']);
   if (!$object) {
     drupal_set_message("Fedora object doesn't exist.");

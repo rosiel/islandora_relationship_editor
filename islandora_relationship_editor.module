@@ -5,6 +5,9 @@
  *
  */
 
+// Namespace for adding relationships 
+define('MYNS_URI', 'http://www.cec.org/ontologies/relationships#');
+
 /** 
  * Implements hook_menu().
  */
@@ -14,7 +17,7 @@ function islandora_relationship_editor_menu() {
     'description' => 'Add, remove, or validate related objects',
     'file' => 'Main.inc',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('display_relationships', 2),
+    'page arguments' => array('islandora_relationship_editor_display_relationships', 2),
     'access arguments' => array(FEDORA_METADATA_EDIT),
     'type' => MENU_LOCAL_TASK,
   );
@@ -23,22 +26,21 @@ function islandora_relationship_editor_menu() {
     'description' => t('Add a new related object'),
     'file' => 'Add.inc',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('add_relationships', 2),
+    'page arguments' => array('islandora_relationship_editor_add_relationships', 2),
     'access arguments' => array(FEDORA_METADATA_EDIT),
     'type' => MENU_LOCAL_ACTION,
   );
-  $items['islandora/object/%/manage/relationships/delete/%/%'] = array(
+  $items['islandora/object/%/manage/relationships/delete/%/%/%'] = array(
     'title' => t('Delete relationship'),
     'description' => t('Delete a relationship'),
     'file' => 'Delete.inc',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('delete_relationships', 2, 6, 7),
+    'page arguments' => array('islandora_relationship_editor_delete_relationships', 2, 6, 7, 8),
     'access arguments' => array(FEDORA_METADATA_EDIT),
     'type' => MENU_CALLBACK,
   );
 
   return $items;
-
 }
 
 
@@ -52,10 +54,31 @@ function islandora_relationship_editor_theme() {
       'template' => 'relationship-editor-table',
       'path' => drupal_get_path('module', 'islandora_relationship_editor') . '/theme',
     ),
+    'islandora_relationship_editor_related_objects' => array(
+      'variables' => array('islandora_object' => NULL),
+      'template' => 'theme/related-objects',
+      'file' => 'theme/related_objects.theme.inc',
+    ),
   );
- 
 }
 
+/** 
+ * Gets delete menu path for a relationship
+ */
+function islandora_relationship_editor_get_delete_path($objectPid, $namespace, $relationship, $targetPid) {
+  $namespace = $namespace ? $namespace : 'NULL';
+  $relationship = $relationship ? $relationship : 'NULL';
+  $targetPid = $targetPid ? $targetPid : 'NULL';
+
+  return 'islandora/object/' . $objectPid . '/manage/relationships/delete/' . $namespace . '/' . $relationship . '/' . $targetPid;
+}
+
+/** 
+ * Returns the list of relationships that can be added to this object.
+ *
+ * @param string $object_pid
+ *    the Fedora pid of the object to which the relationship will apply
+ */
 function get_possible_relationships($object_pid){
   return array(
     'isDraftOf' => t('is draft of'),
@@ -69,3 +92,11 @@ function get_possible_relationships($object_pid){
   );
 }
 
+
+/** 
+ * Implements hook_islandora_view_object().
+ */
+function islandora_relationship_editor_islandora_view_object($object, $page_number, $page_size) {
+  $output = theme('islandora_relationship_editor_related_objects', array('islandora_object' => $object));
+  return array('Related objects' => $output);
+}

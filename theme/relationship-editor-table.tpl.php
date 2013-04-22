@@ -16,7 +16,7 @@
       </tr>
       <?php foreach ($relationships as $relationship) : ?>
       <tr>
-        <td><?php print $relationship['predicate'] ?></td>
+        <td><?php print $relationship['relationship'] ?></td>
         <td><?php print $relationship['object'] ?></td>
         <td><?php print $relationship['delete'] ?></td>
       </tr>
