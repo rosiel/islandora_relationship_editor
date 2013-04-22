@@ -7,10 +7,15 @@ function islandora_relationship_editor_preprocess_islandora_relationship_editor_
   $related = array();
   foreach ($rels as $key => $rel) {
     if (($rel['predicate']['alias'] != 'fedora') and ($rel['predicate']['alias'] != 'fedora-model')) {
-        $object = $islandora_object->repository->getObject($rel['object']['value']);
-        if ($object) {
-            $related[] = $object;
-        } 
+       watchdog('rosie', 'on object ' . $rel['object']['value']);
+       try {
+         $object = $islandora_object->repository->getObject($rel['object']['value']);
+       } catch (Exception $e) {
+         continue;
+       }
+       if ($object) {
+         $related[] = $object;
+       } 
     }
   }
   $variables['related'] = $related;
