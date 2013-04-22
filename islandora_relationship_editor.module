@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ *
+ */
+
+/** 
+ * Implements hook_menu().
+ */
+function islandora_relationship_editor_menu() {
+  $items['islandora/object/%/manage/relationships'] = array(
+    'title' => 'Relationships',
+    'description' => 'Add, remove, or validate related objects',
+    'file' => 'Main.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('display_relationships', 2),
+    'access arguments' => array(FEDORA_METADATA_EDIT),
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['islandora/object/%/manage/relationships/add'] = array(
+    'title' => t('Add relationships'),
+    'description' => t('Add a new related object'),
+    'file' => 'Add.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('add_relationships', 2),
+    'access arguments' => array(FEDORA_METADATA_EDIT),
+    'type' => MENU_LOCAL_ACTION,
+  );
+  $items['islandora/object/%/manage/relationships/delete/%/%'] = array(
+    'title' => t('Delete relationship'),
+    'description' => t('Delete a relationship'),
+    'file' => 'Delete.inc',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('delete_relationships', 2, 6, 7),
+    'access arguments' => array(FEDORA_METADATA_EDIT),
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+
+}
+
+
+/** 
+ * Implements hook_theme().
+ */
+function islandora_relationship_editor_theme() {
+  return array(
+    'relationship_editor_table' => array(
+      'variables' => array('relationships' => NULL),
+      'template' => 'relationship-editor-table',
+      'path' => drupal_get_path('module', 'islandora_relationship_editor') . '/theme',
+    ),
+  );
+ 
+}
+
+function get_possible_relationships($object_pid){
+  return array(
+    'isDraftOf' => t('is draft of'),
+    'hasDraft' => t('has draft'),
+    'isSummaryOf' => t('is summary of'),
+    'hasSummary' => t('has summary'),
+    'isUpdateOf' => t('is updated edition of'),
+    'hasUpdate' => t('has updated edition'),
+    'isResponseTo' => t('is response to'),
+    'hasResponse' => t('has response'),
+  );
+}
+

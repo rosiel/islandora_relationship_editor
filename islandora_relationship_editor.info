@@ -1,0 +1,6 @@
+name = Islandora Relationship Editor
+description = Provides an interface for adding and removing RELS-EXT relations between objects
+package = Islandora customizations
+dependencies[] = islandora
+version = 7.x-0.1
+core = 7.x
