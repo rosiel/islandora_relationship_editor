@@ -39,17 +39,24 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
   return $form;
 
 }
-
-function islandora_relationship_editor_add_relationships_submit($form, &$form_state) {
+function islandora_relationship_editor_add_relationships_validate($form, &$form_state) {
   $object = islandora_object_load($form_state['values']['this']);
   if (!$object) {
-    drupal_set_message("Fedora object doesn't exist.");
+    form_set_error('object', t("This Fedora object doesn't exist."));
   }
   $target = islandora_object_load($form_state['values']['target']);
   if (!$target) {
-    drupal_set_message("Fedora object doesn't exist.");
+    form_set_error('object', t("The target Fedora object doesn't exist. Please check the PID."));
   }
-  $object->relationships->add(MYNS_URI, $form_state['values']['relationship'], $form_state['values']['target']);
+}
+
+function islandora_relationship_editor_add_relationships_submit($form, &$form_state) {
+  $object = islandora_object_load($form_state['values']['this']);
+  $target = islandora_object_load($form_state['values']['target']);
+  $chunks = explode('|', $form_state['values']['relationship']);
+  $ns = $chunks[0];
+  $relationship = $chunks [1];
+  $object->relationships->add($ns, $relationship, $form_state['values']['target']);
 
   if ($form_state['values']['is-symmetric'] == 1) {
 	  $target->relationships->add(MYNS_URI, $form_state['values']['sym-relationship'], $form_state['values']['this']);
