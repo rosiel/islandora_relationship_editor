@@ -7,6 +7,7 @@
 
 // Namespace for adding relationships 
 define('MYNS_URI', 'http://www.cec.org/ontologies/relationships#');
+define('FEDORA',"info:fedora/fedora-system:def/relations-external#");
 
 /** 
  * Implements hook_menu().
@@ -38,6 +39,12 @@ function islandora_relationship_editor_menu() {
     'page arguments' => array('islandora_relationship_editor_delete_relationships', 2, 6, 7, 8),
     'access arguments' => array(FEDORA_METADATA_EDIT),
     'type' => MENU_CALLBACK,
+  );
+  $items['admin/islandora_relationships/collections_autocomplete'] = array(
+      'page callback' => 'collections_autocomplete',
+      'access arguments' => array(FEDORA_METADATA_EDIT),
+
+      'type' => MENU_CALLBACK,
   );
 
   return $items;
@@ -81,22 +88,29 @@ function islandora_relationship_editor_get_delete_path($objectPid, $namespace, $
  */
 function get_possible_relationships($object_pid){
   return array(
-    'isDraftOf' => t('is draft of'),
-    'hasDraft' => t('has draft'),
-    'isSummaryOf' => t('is summary of'),
-    'hasSummary' => t('has summary'),
-    'isUpdateOf' => t('is updated edition of'),
-    'hasUpdate' => t('has updated edition'),
-    'isResponseTo' => t('is response to'),
-    'hasResponse' => t('has response'),
+    FEDORA . '|isMemberOfCollection' => t('is member of collection'),
+    MYNS_URI . '|isDraftOf' => t('is draft of'),
+    MYNS_URI . '|hasDraft' => t('has draft'),
+    MYNS_URI . '|isSummaryOf' => t('is summary of'),
+    MYNS_URI . '|hasSummary' => t('has summary'),
+    MYNS_URI . '|isUpdateOf' => t('is updated edition of'),
+    MYNS_URI . '|hasUpdate' => t('has updated edition'),
+    MYNS_URI . '|isResponseTo' => t('is response to'),
+    MYNS_URI . '|hasResponse' => t('has response'),
+    MYNS_URI . '|isDerivationOf' => t('is derivation of (i.e. is based on)'),
+    MYNS_URI . '|hasDerivation' => t('has derivation (i.e. is basis for)'),
   );
 }
 
 
 /** 
  * Implements hook_islandora_view_object().
+ *
+ * DEPRECATED BECAUSE IT WAS PROOF-OF-CONCEPT
  */
+/*
 function islandora_relationship_editor_islandora_view_object($object, $page_number, $page_size) {
   $output = theme('islandora_relationship_editor_related_objects', array('islandora_object' => $object));
   return array('Related objects' => $output);
 }
+ */
