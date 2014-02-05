@@ -55,11 +55,14 @@ function islandora_relationship_editor_add_relationships_submit($form, &$form_st
   $target = islandora_object_load($form_state['values']['target']);
   $chunks = explode('|', $form_state['values']['relationship']);
   $ns = $chunks[0];
-  $relationship = $chunks [1];
+  $relationship = $chunks[1];
   $object->relationships->add($ns, $relationship, $form_state['values']['target']);
 
   if ($form_state['values']['is-symmetric'] == 1) {
-	  $target->relationships->add(MYNS_URI, $form_state['values']['sym-relationship'], $form_state['values']['this']);
+      $chunks = explode('|', $form_state['values']['sym-relationship']);
+      $ns = $chunks[0];
+      $relationship = $chunks[1];
+	  $target->relationships->add($ns, $relationship, $form_state['values']['this']);
   }
   $form_state['redirect'] = "islandora/object/{$object->id}/manage/relationships";
 
