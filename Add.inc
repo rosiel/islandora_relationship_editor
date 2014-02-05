@@ -1,6 +1,10 @@
 <?php
 
 function islandora_relationship_editor_add_relationships(array $form, array &$form_state, $object_pid) {
+  # Sanitize the PID
+  if (strpos(':', $object_pid) === FALSE) {
+    $object_pid = urldecode($object_pid);
+  }
   $form = array();
   $form['this'] = array(
     '#title' => t('This Object'),
@@ -16,6 +20,7 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
   $form['target'] = array(
     '#type' => 'textfield',
     '#title' => t('Target object'),
+    #FIXME put an autocomplete here.
   );
   $form['symmetric'] = array(
 	  '#type' => 'fieldset',
