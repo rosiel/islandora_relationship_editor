@@ -18,7 +18,7 @@ function islandora_relationship_editor_menu() {
     'file' => 'Main.inc',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_relationship_editor_display_relationships', 2),
-    'access arguments' => array(FEDORA_METADATA_EDIT),
+    'access arguments' => array(ISLANDORA_METADATA_EDIT),
     'type' => MENU_LOCAL_TASK,
   );
   $items['islandora/object/%/manage/relationships/add'] = array(
@@ -27,7 +27,7 @@ function islandora_relationship_editor_menu() {
     'file' => 'Add.inc',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_relationship_editor_add_relationships', 2),
-    'access arguments' => array(FEDORA_METADATA_EDIT),
+    'access arguments' => array(ISLANDORA_METADATA_EDIT),
     'type' => MENU_LOCAL_ACTION,
   );
   $items['islandora/object/%/manage/relationships/delete/%/%/%'] = array(
@@ -36,7 +36,7 @@ function islandora_relationship_editor_menu() {
     'file' => 'Delete.inc',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('islandora_relationship_editor_delete_relationships', 2, 6, 7, 8),
-    'access arguments' => array(FEDORA_METADATA_EDIT),
+    'access arguments' => array(ISLANDORA_METADATA_EDIT),
     'type' => MENU_CALLBACK,
   );
 
