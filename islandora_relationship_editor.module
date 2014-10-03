@@ -81,14 +81,8 @@ function islandora_relationship_editor_get_delete_path($objectPid, $namespace, $
  */
 function get_possible_relationships($object_pid){
   return array(
-    'isDraftOf' => t('is draft of'),
-    'hasDraft' => t('has draft'),
-    'isSummaryOf' => t('is summary of'),
-    'hasSummary' => t('has summary'),
-    'isUpdateOf' => t('is updated edition of'),
-    'hasUpdate' => t('has updated edition'),
-    'isResponseTo' => t('is response to'),
-    'hasResponse' => t('has response'),
+    'P107_has_current_or_former_member' => t('has current or former member'),
+    'P107i_is_current_or_former_member_of' => t('is current or former member of'),
   );
 }
 

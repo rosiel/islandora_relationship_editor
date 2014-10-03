@@ -16,6 +16,7 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
   $form['target'] = array(
     '#type' => 'textfield',
     '#title' => t('Target object'),
+    '#autocomplete_path' => 'islandora/entities/autocomplete/entity_pid',
   );
   $form['symmetric'] = array(
 	  '#type' => 'fieldset',
