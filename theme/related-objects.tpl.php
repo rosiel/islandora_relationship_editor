@@ -16,7 +16,10 @@
         <h2><?php print t('Related Objects'); ?></h2>
         <ul>
           <?php foreach ($related as $obj): ?>
-            <li><?php print l($obj->label, "islandora/object/{$obj->id}"); ?></li>
+            <?php if(isset($obj['thumbnail_url'])): ?>
+              <div class="thumb"><?php print $obj['thumbnail_url']; ?> </div>
+            <?php endif; ?>
+            <div class="label"><?php print $obj['object_link']; ?></div>
           <?php endforeach; ?>
         </ul>
       </div>
