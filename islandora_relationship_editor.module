@@ -8,7 +8,7 @@
 // Namespace for adding relationships 
 define('MYNS_URI', 'http://www.cec.org/ontologies/relationships#');
 
-/** 
+/**
  * Implements hook_menu().
  */
 function islandora_relationship_editor_menu() {
@@ -44,7 +44,7 @@ function islandora_relationship_editor_menu() {
 }
 
 
-/** 
+/**
  * Implements hook_theme().
  */
 function islandora_relationship_editor_theme() {
@@ -62,24 +62,24 @@ function islandora_relationship_editor_theme() {
   );
 }
 
-/** 
- * Gets delete menu path for a relationship
+/**
+ * Gets delete menu path for a relationship.
  */
-function islandora_relationship_editor_get_delete_path($objectPid, $namespace, $relationship, $targetPid) {
+function islandora_relationship_editor_get_delete_path($object_pid, $namespace, $relationship, $target_pid) {
   $namespace = $namespace ? $namespace : 'NULL';
   $relationship = $relationship ? $relationship : 'NULL';
-  $targetPid = $targetPid ? $targetPid : 'NULL';
+  $target_pid = $target_pid ? $target_pid : 'NULL';
 
-  return 'islandora/object/' . $objectPid . '/manage/relationships/delete/' . $namespace . '/' . $relationship . '/' . $targetPid;
+  return 'islandora/object/' . $object_pid . '/manage/relationships/delete/' . $namespace . '/' . $relationship . '/' . $target_pid;
 }
 
-/** 
+/**
  * Returns the list of relationships that can be added to this object.
  *
  * @param string $object_pid
- *    the Fedora pid of the object to which the relationship will apply
+ *   the Fedora pid of the object to which the relationship will apply.
  */
-function get_possible_relationships($object_pid){
+function get_possible_relationships($object_pid) {
   return array(
     'P107_has_current_or_former_member' => t('has current or former member'),
     'P107i_is_current_or_former_member_of' => t('is current or former member of'),
@@ -87,7 +87,7 @@ function get_possible_relationships($object_pid){
 }
 
 
-/** 
+/**
  * Implements hook_islandora_view_object().
  */
 function islandora_relationship_editor_islandora_view_object($object, $page_number, $page_size) {
