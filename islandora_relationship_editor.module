@@ -6,7 +6,7 @@
  */
 
 // Namespace for adding relationships 
-define('MYNS_URI', 'http://www.cec.org/ontologies/relationships#');
+define('MYNS_URI', 'http://islandora.ca/BDH/RELS/temp/');
 
 /**
  * Implements hook_menu().
@@ -80,6 +80,15 @@ function islandora_relationship_editor_get_delete_path($object_pid, $namespace, 
  *   the Fedora pid of the object to which the relationship will apply.
  */
 function get_possible_relationships($object_pid) {
+  $object = islandora_object_load($object_pid);
+  if (!$object) {
+    return array();
+  }
+  $options = array();
+  if (in_array('islandora:sp_basic_image', $object->models) or in_array('islandora:sp_large_image_cmodel', $object->models)) {
+    $options['P138_represents'] = t('represents (is an image or video of)');
+  }
+  return $options;
   return array(
     'P107_has_current_or_former_member' => t('has current or former member'),
     'P107i_is_current_or_former_member_of' => t('is current or former member of'),
@@ -88,9 +97,28 @@ function get_possible_relationships($object_pid) {
 
 
 /**
+ * Returns the list of relationships that can be added to this object.
+ *
+ * @param string $object_pid
+ *   the Fedora pid of the object to which the relationship will apply.
+ */
+function get_possible_reverse_relationships($object_pid) {
+  $object = islandora_object_load($object_pid);
+  if (!$object) {
+    return array();
+  }
+  $options = array();
+  if (in_array('islandora:sp_basic_image', $object->models) or in_array('islandora:sp_large_image_cmodel', $object->models)) {
+    $options['P138i_has_representation'] = t('has representation (is depicted in)');
+  }
+  return $options;
+}
+
+/**
  * Implements hook_islandora_view_object().
  */
 function islandora_relationship_editor_islandora_view_object($object, $page_number, $page_size) {
+  return NULL;
   $output = theme('islandora_relationship_editor_related_objects', array('islandora_object' => $object));
   return array('Related objects' => $output);
 }

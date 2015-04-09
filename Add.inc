@@ -16,7 +16,7 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
   $form['target'] = array(
     '#type' => 'textfield',
     '#title' => t('Target object'),
-    '#autocomplete_path' => 'islandora/entities/autocomplete/entity_pid',
+    '#autocomplete_path' => 'islandora/ethnography/autocomplete/general',
   );
   $form['symmetric'] = array(
 	  '#type' => 'fieldset',
@@ -30,7 +30,7 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
 	  '#type' => 'select',
 	  '#title' => t('Choose the corresponding relationship'),
 	  '#description' => t('This should be the "opposite" relationship, which will be applied to the target object, with a value of this object.'),
-	  '#options' => get_possible_relationships($object_pid),
+	  '#options' => get_possible_reverse_relationships($object_pid),
 	  '#default_value' => '',
   );
   $form['submit'] = array(
@@ -56,5 +56,4 @@ function islandora_relationship_editor_add_relationships_submit($form, &$form_st
 	  $target->relationships->add(MYNS_URI, $form_state['values']['sym-relationship'], $form_state['values']['this']);
   }
   $form_state['redirect'] = "islandora/object/{$object->id}/manage/relationships";
-
 }

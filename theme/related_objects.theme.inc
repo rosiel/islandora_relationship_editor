@@ -22,12 +22,14 @@ function islandora_relationship_editor_preprocess_islandora_relationship_editor_
       }
       if ($object) {
         $values = array();
+        $values['relationship'] = $rel['predicate']['value'];
         $values['object_link'] = l($object->label, "islandora/object/{$object->id}");
 
         if (isset($object['TN']) && islandora_datastream_access(ISLANDORA_VIEW_OBJECTS, $object['TN'])) {
           $values['thumbnail_url'] = theme('image', array(
             'path' => url("islandora/object/{$object->id}/datastream/TN/view"),
             'attributes' => array(),
+            'width' => '100px',
           ));
         }
 
