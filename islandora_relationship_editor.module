@@ -63,11 +63,11 @@ function islandora_relationship_editor_theme() {
 }
 
 /**
- * Gets delete menu path for a relationship.
+ * Creates the delete menu path for a relationship.
  */
 function islandora_relationship_editor_get_delete_path($object_pid, $namespace, $relationship, $target_pid) {
-  $namespace = $namespace ? $namespace : 'NULL';
-  $relationship = $relationship ? $relationship : 'NULL';
+  $namespace = $namespace ? urlencode($namespace) : 'NULL';
+  $relationship = $relationship ? urlencode($relationship) : 'NULL';
   $target_pid = $target_pid ? $target_pid : 'NULL';
 
   return 'islandora/object/' . $object_pid . '/manage/relationships/delete/' . $namespace . '/' . $relationship . '/' . $target_pid;
