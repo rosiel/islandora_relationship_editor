@@ -86,18 +86,54 @@ function get_possible_relationships($object_pid) {
   }
   $options = array();
   if (in_array('islandora:sp_basic_image', $object->models) or in_array('islandora:sp_large_image_cmodel', $object->models)) {
-    $options['P138_represents'] = t('represents (is an image or video of)');
+    $options['CIDOC:P138_represents'] = t('represents (is an image or video of) [two-way]');
   }
+  if (in_array('islandora:personCModel', $object->models)) {
+    $options['tempHasStyle'] = t('has Fiddling Style');
+    $options['CIDOC:P107i_is_current_or_former_member_of'] = t('is member of group');
+    $options['CIDOC:P138i_has_representation'] = t('has representation (is in image) [two-way]');
+    $options['hasRepresentativeImage'] = t('has featured image');
+    $options['isSpeakerIn'] = t('is the main speaking voice in in [Deprecated!]');
+    $options['isFiddlerIn'] = t('is the main fiddler in [Deprecated!]');
+    $options['tempAuthored'] = t('Authored (tune)');
+  }
+  if (in_array('islandora:BDHTuneCModel', $object->models)) {
+    $options['tempHasAuthor'] = t('has Author');
+    $options['isVariantOf'] = t('is a variant of (tune) [two-way]');
+    $options['hasVariant'] = t('has a variant (tune) [two-way]');
+    $options['FRBROO:R3_is_realised_in'] = t('is realised (notated) in [two-way]'); // namespace FRBROO
+    $options['R3xi_variant-is_realised_in'] = t('has a variant that is realised (notated) in [two-way]'); // namespace FRBROO
+    $options['is_incorporated_in'] = t('is incorporated in recording [two-way]'); // namespace TEMP
+    $options['variantIsIncorporatedIn'] = t('has a variant that is incorporated in recording [two-way]'); // namespace TEMP
+  }
+  if (in_array('bdh:audioSnippetCModel', $object->models)) {
+    $options['hasMainMusician'] = t('has main musician');
+    $options['tempHasFiddler'] = t('has fiddler [Deprecated!]');
+    $options['hasAccompanist'] = t('has second fiddler');
+    $options['incorporates'] = t('incorporates (tune)');
+    $options['incorporatesVariantOf'] = t('incorporates ("parent" tune)');
+    $options['hasSpeaker'] = t('has speaker (person)');
+  }
+  if (in_array('bdh:videoSnippetCModel', $object->models)) {
+    $options['hasMainMusician'] = t('has main musician');
+    $options['hasAccompanist'] = t('has second fiddler');
+    $options['incorporates'] = t('incorporates (tune)');
+    $options['incorporatesVariantOf'] = t('incorporates ("parent" tune)');
+    $options['hasSpeaker'] = t('has speaker (person).');
+  }
+  if (in_array('islandora:BDHNotationCModel', $object->models)) {
+    $options['FRBROO:R3i_realises'] = t('is notation for (tune or tune version)');
+    $options['R3xi_realises_variant_of'] = t('is notation for variant of (parent tune)');
+  }
+  if (in_array('islandora:organizationCModel', $object->models)) {
+    $options['CIDOC:P107_has_current_or_former_member'] = t('has current or former group member');
+  }
+
   return $options;
-  return array(
-    'P107_has_current_or_former_member' => t('has current or former member'),
-    'P107i_is_current_or_former_member_of' => t('is current or former member of'),
-  );
 }
 
-
 /**
- * Returns the list of relationships that can be added to this object.
+ * Returns the list of relationships that can point to this object.
  *
  * @param string $object_pid
  *   the Fedora pid of the object to which the relationship will apply.
@@ -109,7 +145,44 @@ function get_possible_reverse_relationships($object_pid) {
   }
   $options = array();
   if (in_array('islandora:sp_basic_image', $object->models) or in_array('islandora:sp_large_image_cmodel', $object->models)) {
-    $options['P138i_has_representation'] = t('has representation (is depicted in)');
+    $options['CIDOC:P138i_has_representation'] = t('has representation (is depicted in)');
+  }
+  if (in_array('islandora:personCModel', $object->models)) {
+    $options['tempHasAuthor'] = t('has Author');
+    $options['CIDOC:P138_represents'] = t('represents (is an image or video of)');
+    $options['CIDOC:P107_has_current_or_former_member'] = t('has current or former group member');
+    $options['hasMainMusician'] = t('has main musician');
+    $options['hasAccompanist'] = t('has second fiddler');
+    $options['hasSpeaker'] = t('has speaker (person)');
+
+  }
+  if (in_array('islandora:BDHTuneCModel', $object->models)) {
+    $options['tempAuthored'] = t('Authored');
+    $options['isVariantOf'] = t('is a variant of (tune)');
+    $options['hasVariant'] = t('has a variant (tune)');
+    $options['FRBROO:R3i_realises'] = t('is notation for (tune or tune version)');
+    $options['R3xi_realises_variant_of'] = t('is notation for variant of (parent tune)');
+    $options['incorporates'] = t('incorporates (tune)');
+    $options['incorporatesVariantOf'] = t('incorporates ("parent" tune)');
+
+  }
+  if (in_array('bdh:audioSnippetCModel', $object->models)) {
+    $options['isSpeakerIn'] = t('is the main fiddler in [Deprecated!]');
+    $options['is_incorporated_in'] = t('is incorporated in recording [Deprecated!]'); // namespace TEMP
+    $options['variantIsIncorporatedIn'] = t('has a variant that is incorporated in recording [Deprecated!]'); // namespace TEMP
+  }
+  if (in_array('bdh:videoSnippetCModel', $object->models)) {
+    $options['isSpeakerIn'] = t('is the main fiddler in [Deprecated!]');
+    $options['is_incorporated_in'] = t('is incorporated in recording [Deprecated!]'); // namespace TEMP
+    $options['variantIsIncorporatedIn'] = t('has a variant that is incorporated in recording [Deprecated!]'); // namespace TEMP
+  }
+  if (in_array('islandora:organizationCModel', $object->models)) {
+    $options['CIDOC:P107i_is_current_or_former_member'] = t('is member of group');
+    $options['CIDOC:P138_represents'] = t('represents (is an image or video of)');
+  }
+  if (in_array('islandora:BDHNotationCModel', $object->models)) {
+    $options['FRBROO:R3_is_realised_in'] = t('is realised (notated) in'); // namespace FRBROO
+    $options['R3xi_variant-is_realised_in'] = t('has a variant that is realised (notated) in'); // namespace FRBROO
   }
   return $options;
 }
