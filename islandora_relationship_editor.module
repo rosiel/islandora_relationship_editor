@@ -195,3 +195,7 @@ function islandora_relationship_editor_islandora_view_object($object, $page_numb
   $output = theme('islandora_relationship_editor_related_objects', array('islandora_object' => $object));
   return array('Related objects' => $output);
 }
+
+function islandora_relationships_switch_callback($form, &$form_state) {
+  return $form['target'];
+}

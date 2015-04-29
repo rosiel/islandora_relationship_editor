@@ -13,10 +13,30 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
     '#title' => t('Relationship'),
     '#options' => get_possible_relationships($object_pid),
   );
+  $options = array(
+    'general' => t('Person'),
+    'tune' => t('Tune'),
+    'group' => t('Group'),
+    'story' => t('Story Page'),
+  );
+  $form['target_type'] = array(
+    '#type' => 'radios',
+    '#options' => $options,
+    '#default_value' => 'general',
+    '#ajax' => array(
+      'callback' => 'islandora_relationships_switch_callback',
+      'wrapper' => 'target-field',
+      'effect' => 'fade',
+      'method' => 'replace',
+    ),
+  );
+  $autocomplete_path = 'islandora/ethnography/autocomplete/' . (isset($form_state['values']['target_type']) ? $form_state['values']['target_type'] : 'general');
   $form['target'] = array(
     '#type' => 'textfield',
     '#title' => t('Target object'),
-    '#autocomplete_path' => 'islandora/ethnography/autocomplete/general',
+    '#autocomplete_path' => $autocomplete_path,
+    '#prefix' => '<div id="target-field">',
+    '#suffix' => '</div>',
   );
   $form['symmetric'] = array(
 	  '#type' => 'fieldset',
@@ -37,6 +57,7 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
     '#type' => 'submit',
     '#value' => t('submit'),
   );
+
   return $form;
 
 }
