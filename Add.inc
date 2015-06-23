@@ -41,6 +41,8 @@ function islandora_relationship_editor_add_relationships(array $form, array &$fo
   $form['symmetric'] = array(
 	  '#type' => 'fieldset',
 	  '#title' => 'Symmetry',
+    '#access' => FALSE,
+
   );
  $form['symmetric']['is-symmetric'] = array(
 	  '#type' => 'checkbox',
