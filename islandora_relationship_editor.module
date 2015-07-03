@@ -91,24 +91,23 @@ function get_possible_relationships($object_pid) {
   if (in_array('islandora:personCModel', $object->models)) {
     $options['tempHasStyle'] = t('has Fiddling Style');
     $options['CIDOC:P107i_is_current_or_former_member_of'] = t('is member of group');
-    $options['CIDOC:P138i_has_representation'] = t('has representation (is in image) [two-way]');
+    //$options['CIDOC:P138i_has_representation'] = t('has representation (is in image) [two-way]');
     $options['hasRepresentativeImage'] = t('has featured image');
-    $options['isSpeakerIn'] = t('is the main speaking voice in in [Deprecated!]');
-    $options['isFiddlerIn'] = t('is the main fiddler in [Deprecated!]');
-    $options['tempAuthored'] = t('Authored (tune)');
+    //$options['isSpeakerIn'] = t('is the main speaking voice in in [Deprecated!]');
+    //$options['isFiddlerIn'] = t('is the main fiddler in [Deprecated!]');
+    //$options['tempAuthored'] = t('Authored (tune)');
   }
   if (in_array('islandora:BDHTuneCModel', $object->models)) {
     $options['tempHasAuthor'] = t('has Author');
     $options['isVariantOf'] = t('is a variant of (tune) [two-way]');
     $options['hasVariant'] = t('has a variant (tune) [two-way]');
-    $options['FRBROO:R3_is_realised_in'] = t('is realised (notated) in [two-way]'); // namespace FRBROO
+    //$options['FRBROO:R3_is_realised_in'] = t('is realised (notated) in [two-way]'); // namespace FRBROO
     $options['R3xi_variant-is_realised_in'] = t('has a variant that is realised (notated) in [two-way]'); // namespace FRBROO
-    $options['is_incorporated_in'] = t('is incorporated in recording [two-way]'); // namespace TEMP
+    //$options['is_incorporated_in'] = t('is incorporated in recording [two-way]'); // namespace TEMP
     $options['variantIsIncorporatedIn'] = t('has a variant that is incorporated in recording [two-way]'); // namespace TEMP
   }
   if (in_array('bdh:audioSnippetCModel', $object->models)) {
     $options['hasMainMusician'] = t('has main musician');
-    $options['tempHasFiddler'] = t('has fiddler [Deprecated!]');
     $options['hasAccompanist'] = t('has second fiddler');
     $options['incorporates'] = t('incorporates (tune)');
     $options['incorporatesVariantOf'] = t('incorporates ("parent" tune)');
