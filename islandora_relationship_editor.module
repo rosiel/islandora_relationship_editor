@@ -106,7 +106,7 @@ function get_possible_relationships($object_pid) {
     //$options['is_incorporated_in'] = t('is incorporated in recording [two-way]'); // namespace TEMP
     $options['variantIsIncorporatedIn'] = t('has a variant that is incorporated in recording [two-way]'); // namespace TEMP
   }
-  if (in_array('bdh:audioSnippetCModel', $object->models)) {
+  if (in_array('bdh:audioSnippetCModel', $object->models) or in_array('islandora:sp-audioCModel', $object->models)) {
     $options['hasMainMusician'] = t('has main musician');
     $options['hasAccompanist'] = t('has second fiddler');
     $options['incorporates'] = t('incorporates (tune)');
@@ -198,3 +198,4 @@ function islandora_relationship_editor_islandora_view_object($object, $page_numb
 function islandora_relationships_switch_callback($form, &$form_state) {
   return $form['target'];
 }
+
